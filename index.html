@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hamburguesas Pepito - Sabor Brutal & Gourmet</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            gold: '#f2b134',
+            dark: '#050506',
+            card: '#0d0d10',
+            red: '#e63946',
+            accent: '#ff9f1c'
+          }
+        },
+        fontFamily: {
+          fraunces: ['Fraunces', 'serif'],
+          sans: ['DM Sans', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#050506; color:#f6eee2; font-family:'DM Sans',system-ui,sans-serif; overflow-x:hidden; scroll-behavior: smooth;}
+
+/* Fondo Inmersivo Inicial */
+.stage{position:fixed;inset:0;overflow:hidden;background:#050506; z-index:1}
+video, img.hero-bg{display:block}
+#bgv{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(38px) brightness(.45) saturate(1.2)}
+#mainWrap{position:absolute;inset:0;display:grid;place-items:center;will-change:transform}
+#mainv{height:100%;width:auto;max-width:100%;aspect-ratio:3/4;object-fit:cover;
+  -webkit-mask-image:radial-gradient(ellipse 68% 70% at 50% 50%,#000 62%,transparent 100%);
+  mask-image:radial-gradient(ellipse 68% 70% at 50% 50%,#000 62%,transparent 100%)}
+@media (max-aspect-ratio:3/4){#mainv{height:auto;width:100%}}
+.vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(5,5,6,.85) 100%); z-index:2}
+.scroll-space{height:300vh; position:relative; z-index:3; pointer-events:none;}
+
+/* Overlay de Textos */
+.txt{position:fixed;z-index:4;pointer-events:none;opacity:0;transition:opacity .7s,transform .7s;transform:translateY(14px);max-width:min(28ch,88vw);text-shadow:0 4px 30px rgba(0,0,0,0.9)}
+.txt.on{opacity:1;transform:none}
+.txt h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2rem,4.8vw,4rem);line-height:1.02;letter-spacing:-.01em; color:#ffffff}
+.txt p{margin-top:.7rem;color:#e0d5c4;line-height:1.5;font-size:clamp(1rem,1.4vw,1.15rem)}
+#t0{left:6vw;top:40%;margin-top:-4rem}
+#t0 h2{font-style:italic;font-weight:400;font-size:clamp(2.8rem,8.5vw,6.5rem);line-height:.95; color:#f2b134}
+#t1{left:6vw;bottom:18vh}
+#t2{right:6vw;top:25vh;text-align:right}
+#t3{left:6vw;bottom:18vh}
+#t4{right:6vw;bottom:18vh;text-align:right}
+@media (max-width:700px){
+  #t0{top:auto;bottom:20vh;margin:0}
+  #t2{top:auto;bottom:18vh}
+}
+
+#bar{position:fixed;left:0;top:0;height:3px;width:0;background:#f2b134;z-index:50; box-shadow:0 0 10px #f2b134}
+#tap{position:fixed;inset:0;z-index:40;display:none;place-content:center;background:rgba(0,0,0,.75);color:#fff;font:500 1.1rem 'DM Sans',sans-serif;border:0;width:100%;cursor:pointer}
+
+/* Animaciones y Efectos */
+.glass-panel {
+  background: rgba(18, 18, 22, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(242, 177, 52, 0.15);
+}
+.glass-card {
+  background: rgba(15, 15, 20, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card:hover {
+  border-color: rgba(242, 177, 52, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -10px rgba(242, 177, 52, 0.15);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #050506; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #f2b134; }
+</style>
+</head>
+<body class="antialiased selection:bg-brand-gold selection:text-black">
+
+<div id="bar"></div>
+<button id="tap" type="button">Toca para reproducir experiencia inmersiva</button>
+
+<div class="stage">
+  <!-- Si burger.mp4 no existe, usara foto3.jpg como fallback decorativo en el poster -->
+  <video id="bgv" src="burger.mp4" poster="foto3.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
+  <div id="mainWrap">
+    <video id="mainv" src="burger.mp4" poster="foto3.jpg" autoplay muted loop playsinline aria-label="Hamburguesa flotando Pepito"></video>
+  </div>
+</div>
+<div class="vig"></div>
+
+<div class="txt on" id="t0">
+  <span class="text-xs uppercase tracking-widest text-brand-gold font-bold block mb-1">Hamburguesas Pepito</span>
+  <h2>Sabor Brutal</h2>
+  <p>Desliza para explorar la experiencia Pepito.</p>
+</div>
+<div class="txt" id="t1">
+  <h2>Pan Brioche Artesanal</h2>
+  <p>Sésamo tostado, miga suave e inigualable sabor mantecoso en cada bocado.</p>
+</div>
+<div class="txt" id="t2">
+  <h2>Ingredientes Seleccionados</h2>
+  <p>Vegetales frescos, salsas de la casa y panceta ahumada crujiente.</p></div>
+<div class="txt" id="t3">
+  <h2>100% Carne Premium</h2>
+  <p>Blend de carnes seleccionadas, selladas a la plancha a alta temperatura con doble queso cheddar.</p>
+</div>
+<div class="txt" id="t4">
+  <h2>¿Con Hambre?</h2>
+  <p>¡Seguí bajando para armar tu pedido ya mismo!</p>
+</div>
+
+<!-- Espaciador para generar scroll inmersivo inicial -->
+<div class="scroll-space"></div>
+
+<header class="fixed top-0 left-0 w-full z-40 transition-all duration-300 px-4 py-3" id="navbar">
+  <div class="max-w-7xl mx-auto glass-panel rounded-2xl px-5 py-3 flex items-center justify-between shadow-2xl">
+    <a href="#" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-xl bg-brand-gold flex items-center justify-center font-fraunces font-bold text-black text-xl shadow-lg group-hover:scale-105 transition-transform">
+        P
+      </div>
+      <div>
+        <span class="font-fraunces text-lg md:text-xl font-bold tracking-tight text-white block leading-none">Hamburguesas Pepito</span>
+        <span class="text-[10px] text-brand-gold uppercase tracking-wider font-semibold">Craft & Gourmet</span>
+      </div>
+    </a>
+
+    <!-- Nav Links Desktop -->
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+      <a href="#menu" class="hover:text-brand-gold transition-colors">Menú</a>
+      <a href="#promos" class="hover:text-brand-gold transition-colors">Especiales</a>
+      <a href="#contacto" class="hover:text-brand-gold transition-colors">Contacto</a>
+    </nav>
+
+    <!-- Botón Carrito Header -->
+    <button id="openCartBtn" class="relative bg-brand-gold text-black font-bold px-4 py-2 rounded-xl flex items-center gap-2 hover:bg-yellow-400 transition-all active:scale-95 shadow-lg shadow-brand-gold/20">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+      </svg>
+      <span class="hidden sm:inline">Mi Pedido</span>
+      <span id="cartCountBadge" class="bg-black text-brand-gold text-xs px-2 py-0.5 rounded-full font-bold min-w-[20px] text-center">0</span>
+    </button>
+  </div>
+</header>
+
+<main class="relative z-10 bg-[#050506] border-t border-brand-gold/20 pt-12 pb-24 shadow-[0_-30px_50px_rgba(0,0,0,0.9)]">
+  
+  <!-- Banner Informativo -->
+  <section class="max-w-7xl mx-auto px-4 mb-12">
+    <div class="glass-panel rounded-3xl p-6 md:p-10 border border-brand-gold/30 bg-gradient-to-r from-brand-card via-black to-brand-card flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center md:text-left">
+        <span class="inline-block px-3 py-1 bg-brand-gold/10 text-brand-gold border border-brand-gold/30 rounded-full text-xs font-semibold uppercase tracking-wider">
+          ⚡ Envíos Rápidos a Domicilio
+        </span>
+        <h1 class="font-fraunces text-3xl md:text-5xl font-bold text-white">Las mejores Burgers & Panchos de la zona</h1>
+        <p class="text-gray-400 max-w-xl text-sm md:text-base">Preparadas al momento con materia prima de máxima calidad. Hacé tu pedido directo a nuestro WhatsApp sin intermediarios.</p>
+      </div>
+      <a href="#menu" class="bg-brand-gold hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl transition-all text-center whitespace-nowrap shadow-xl hover:scale-105 active:scale-95">
+        Ver Menú Completo 👇
+      </a>
+    </div>
+  </section>
+
+  <!-- Categorías de Menú -->
+  <section id="menu" class="max-w-7xl mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <h2 class="font-fraunces text-3xl md:text-4xl font-bold text-white mb-2">Nuestro Menú</h2>
+        <p class="text-gray-400">Seleccioná tus favoritos para agregarlos al carrito de compras.</p>
+      </div>
+
+      <!-- Filtros -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="categoryFilter">
+        <button data-cat="all" class="cat-btn active bg-brand-gold text-black font-bold px-5 py-2.5 rounded-xl text-sm transition-all whitespace-nowrap">
+          Todos
+        </button>
+        <button data-cat="hamburguesas" class="cat-btn bg-brand-card text-gray-300 hover:text-white border border-white/10 font-medium px-5 py-2.5 rounded-xl text-sm transition-all whitespace-nowrap">
+          🍔 Hamburguesas
+        </button>
+        <button data-cat="panchos" class="cat-btn bg-brand-card text-gray-300 hover:text-white border border-white/10 font-medium px-5 py-2.5 rounded-xl text-sm transition-all whitespace-nowrap">
+          🌭 Panchos Gourmet
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="productsGrid">
+      <!-- Los productos se inyectan dinámicamente con JS -->
+    </div>
+  </section>
+
+  <section id="promos" class="max-w-7xl mx-auto px-4 py-16">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <h2 class="font-fraunces text-3xl md:text-4xl font-bold text-white mb-3">Promos & Experiencia Pepito</h2>
+      <p class="text-gray-400 text-sm md:text-base">Combos explosivos diseñados para compartir (o comer solo con mucho orgullo).</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Promo Card 1 -->
+      <div class="glass-card rounded-3xl overflow-hidden p-6 flex flex-col md:flex-row gap-6 items-center border border-brand-gold/30">
+        <img src="images (3).jpg" alt="Pepito Mega Combo" class="w-full md:w-1/2 h-48 object-cover rounded-2xl">
+        <div class="space-y-3 flex-1">
+          <span class="bg-brand-red text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Más Vendido</span>
+          <h3 class="font-fraunces text-2xl font-bold text-white">Pepito Mega Combo</h3>
+          <p class="text-gray-400 text-xs leading-relaxed">Doble medallón de carne, queso cheddar fundido, barbacoa, cebolla crispy + porción grande de papas fritas especiadas.</p>
+          <div class="flex items-center justify-between pt-2">
+            <span class="font-bold text-xl text-brand-gold">$9.800</span>
+            <button onclick="addToCart(6)" class="bg-brand-gold hover:bg-yellow-400 text-black text-sm font-bold px-4 py-2 rounded-xl transition-all active:scale-95">
+              + Agregar Promo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Promo Card 2 -->
+      <div class="glass-card rounded-3xl overflow-hidden p-6 flex flex-col md:flex-row gap-6 items-center border border-brand-gold/30">
+        <img src="dog2.jpg" alt="Duo Panchos Gourmet" class="w-full md:w-1/2 h-48 object-cover rounded-2xl">
+        <div class="space-y-3 flex-1">
+          <span class="bg-brand-accent text-black text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Ideal Para Compartir</span>
+          <h3 class="font-fraunces text-2xl font-bold text-white">Dúo Panchos Gourmet</h3>
+          <p class="text-gray-400 text-xs leading-relaxed">2 Super Panchos Gourmet con salchicha alemana, aderezos especiales, pico de gallo y lluvia de papas pay.</p>
+          <div class="flex items-center justify-between pt-2">
+            <span class="font-bold text-xl text-brand-gold">$7.500</span>
+            <button onclick="addToCart(2)" class="bg-brand-gold hover:bg-yellow-400 text-black text-sm font-bold px-4 py-2 rounded-xl transition-all active:scale-95">
+              + Agregar Promo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="max-w-7xl mx-auto px-4 py-12">
+    <div class="glass-panel rounded-3xl p-8 md:p-12 border border-white/10 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="space-y-3">
+        <div class="w-12 h-12 bg-brand-gold/10 text-brand-gold rounded-2xl flex items-center justify-center text-2xl mb-4">
+          📍
+        </div>
+        <h4 class="font-fraunces text-xl font-bold text-white">Ubicación & Envíos</h4>
+        <p class="text-gray-400 text-sm leading-relaxed">Realizamos envíos a domicilio sin cargo en zona céntrica. Consultá costo para zonas alejadas.</p>
+      </div>
+
+      <div class="space-y-3">
+        <div class="w-12 h-12 bg-brand-gold/10 text-brand-gold rounded-2xl flex items-center justify-center text-2xl mb-4">
+          ⏰
+        </div>
+        <h4 class="font-fraunces text-xl font-bold text-white">Horarios de Atención</h4>
+        <p class="text-gray-400 text-sm leading-relaxed">Miércoles a Domingos:<br><strong class="text-white">19:30 hs a 00:30 hs</strong></p>
+      </div>
+
+      <div class="space-y-3">
+        <div class="w-12 h-12 bg-brand-gold/10 text-brand-gold rounded-2xl flex items-center justify-center text-2xl mb-4">
+          📱
+        </div>
+        <h4 class="font-fraunces text-xl font-bold text-white">Pedidos Directos</h4>
+        <p class="text-gray-400 text-sm leading-relaxed">Atención personalizada y directa vía WhatsApp.<br><strong class="text-brand-gold">WhatsApp: 116852126</strong></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="cartModal" class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-opacity duration-300">
+  <!-- Backdrop -->
+  <div id="cartBackdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
+  
+  <!-- Panel Lateral -->
+  <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-brand-dark border-l border-brand-gold/20 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out pointer-events-auto" id="cartPanel">
+    
+    <!-- Header del Carrito -->
+    <div class="p-6 border-b border-white/10 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-brand-gold flex items-center justify-center font-bold text-black">
+          🛒
+        </div>
+        <h3 class="font-fraunces text-2xl font-bold text-white">Tu Pedido</h3>
+      </div>
+      <button id="closeCartBtn" class="text-gray-400 hover:text-white p-2 rounded-xl hover:bg-white/5 transition-colors">
+        ✕
+      </button>
+    </div>
+
+    <!-- Lista de Items -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cartItemsList">
+      <!-- Inyectado dinámicamente -->
+    </div>
+
+    <!-- Datos de Envío y Checkout -->
+    <div class="p-6 border-t border-white/10 bg-brand-card/50 space-y-4">
+      
+      <div class="space-y-3">
+        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400">Datos para la entrega</label>
+        <input type="text" id="customerName" placeholder="Tu Nombre" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold transition-colors">
+        <input type="text" id="customerAddress" placeholder="Dirección de Entrega / Calle y Nro" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold transition-colors">
+        <select id="paymentMethod" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-gold transition-colors">
+          <option value="Efectivo">Método de pago: Efectivo</option>
+          <option value="Transferencia / Mercado Pago">Método de pago: Mercado Pago / Transferencia</option>
+        </select>
+        <textarea id="orderNotes" placeholder="Notas adicionales (ej: Sin cebolla, tocar timbre 2B)" rows="2" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold transition-colors resize-none"></textarea>
+      </div>
+
+      <!-- Resumen de Total -->
+      <div class="pt-2 border-t border-white/10 space-y-1">
+        <div class="flex justify-between text-gray-400 text-sm">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">$0</span>
+        </div>
+        <div class="flex justify-between text-white font-bold text-xl pt-1">
+          <span>Total</span>
+          <span id="cartTotal" class="text-brand-gold">$0</span>
+        </div>
+      </div>
+
+      <!-- Botón WhatsApp -->
+      <button onclick="sendOrderToWhatsApp()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-emerald-500/20">
+        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+        Enviar Pedido por WhatsApp
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<footer class="bg-black border-t border-white/10 py-8 relative z-10">
+  <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+    <div class="flex items-center justify-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-brand-gold flex items-center justify-center font-fraunces font-bold text-black text-base">
+        P
+      </div>
+      <span class="font-fraunces text-lg font-bold text-white">Hamburguesas Pepito</span>
+    </div>
+    <p class="text-xs text-gray-500">© 2026 Hamburguesas Pepito. Todos los derechos reservados. Las mejores hamburguesas y panchos artesanales.</p>
+  </div>
+</footer>
+
+<script>
+/* -------------------------------------------------------------
+ * 1. DATOS DE PRODUCTOS
+ * ------------------------------------------------------------- */
+const PRODUCTS = [
+  {
+    id: 1,
+    name: "Pancho Especial Pepito",
+    category: "panchos",
+    price: 3800,
+    image: "dog1.jpg",
+    description: "Salchicha premium flambeada, lluvia de papas, queso cheddar derretido, verdeo y aderezo especial Pepito.",
+    badge: "Popular"
+  },
+  {
+    id: 2,
+    name: "Super Pancho Gourmet",
+    category: "panchos",
+    price: 4200,
+    image: "dog2.jpg",
+    description: "Salchicha alemana a la parrilla en pan con sésamo, toppings de pimientos ahumados, ciboulette y alioli casero.",
+    badge: "Chef Choice"
+  },
+  {
+    id: 3,
+    name: "Pepito Fuego",
+    category: "hamburguesas",
+    price: 7800,
+    image: "foto2.jpg",
+    description: "Doble carne a la chapa, queso cheddar fundido, jalapeños, salsa tabasco ahumada y cebolla morada caramelizada.",
+    badge: "¡Picante!"
+  },
+  {
+    id: 4,
+    name: "Pepito Clásica",
+    category: "hamburguesas",
+    price: 6900,
+    image: "foto3.jpg",
+    description: "Medallón de 180g de res seleccionada, queso cheddar, lechuga fresca, tomate jugoso, pepinillos y salsa de la casa.",
+    badge: "Clásica"
+  },
+  {
+    id: 5,
+    name: "Pepito Doble Bacon Extra Cheddar",
+    category: "hamburguesas",
+    price: 8900,
+    image: "foto4.jpg",
+    description: "Doble carne de res, cuádruple cheddar derretido, abundante bacon ahumado crujiente y salsa BBQ estilo Kansas.",
+    badge: "La Más Vendida"
+  },
+  {
+    id: 6,
+    name: "Pepito Mega Combo con Papas",
+    category: "hamburguesas",
+    price: 9800,
+    image: "images (3).jpg",
+    description: "Hamburguesa completa estilo Smash con doble carne, cheddar, bacon y salsas + porción gigante de papas fritas crocantes.",
+    badge: "Combo Completo"
+  }
+];
+
+/* -------------------------------------------------------------
+ * 2. LÓGICA DEL CARRITO
+ * ------------------------------------------------------------- */
+let cart = [];
+
+function formatPrice(amount) {
+  return '$' + amount.toLocaleString('es-AR');
+}
+
+function renderProducts(filterCategory = 'all') {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+
+  const filtered = filterCategory === 'all' 
+    ? PRODUCTS 
+    : PRODUCTS.filter(p => p.category === filterCategory);
+
+  filtered.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'glass-card rounded-3xl overflow-hidden flex flex-col justify-between group';
+    
+    card.innerHTML = `
+      <div>
+        <div class="relative overflow-hidden h-56">
+          <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/1a1a1a/f2b134?text=${encodeURIComponent(product.name)}'">
+          ${product.badge ? `<span class="absolute top-3 left-3 bg-brand-gold text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">${product.badge}</span>` : ''}
+        </div>
+        <div class="p-6 space-y-2">
+          <h3 class="font-fraunces text-2xl font-bold text-white group-hover:text-brand-gold transition-colors">${product.name}</h3>
+          <p class="text-gray-400 text-xs leading-relaxed line-clamp-3">${product.description}</p>
+        </div>
+      </div>
+      <div class="p-6 pt-0 flex items-center justify-between mt-auto">
+        <span class="font-bold text-2xl text-brand-gold">${formatPrice(product.price)}</span>
+        <button onclick="addToCart(${product.id})" class="bg-brand-gold hover:bg-yellow-400 text-black font-bold px-4 py-2.5 rounded-xl text-sm transition-all active:scale-95 flex items-center gap-2 shadow-lg shadow-brand-gold/10">
+          <span>+ Agregar</span>
+        </button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function addToCart(productId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+
+  const existingItem = cart.find(item => item.id === productId);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  updateCartUI();
+  openCart();
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(item => item.id !== productId);
+  updateCartUI();
+}
+
+function changeQuantity(productId, delta) {
+  const item = cart.find(item => item.id === productId);
+  if (!item) return;
+
+  item.quantity += delta;
+  if (item.quantity <= 0) {
+    removeFromCart(productId);
+  } else {
+    updateCartUI();
+  }
+}
+
+function updateCartUI() {
+  const cartList = document.getElementById('cartItemsList');
+  const countBadge = document.getElementById('cartCountBadge');
+  const subtotalEl = document.getElementById('cartSubtotal');
+  const totalEl = document.getElementById('cartTotal');
+
+  // Actualizar Badge Total Items
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+  countBadge.textContent = totalItems;
+
+  // Render HTML Items
+  if (cart.length === 0) {
+    cartList.innerHTML = `
+      <div class="text-center py-12 space-y-3">
+        <div class="text-4xl">🍔</div>
+        <p class="text-gray-400 text-sm">Tu carrito está vacío.</p>
+        <p class="text-xs text-gray-500">Agregá unos deliciosos productos para comenzar.</p>
+      </div>
+    `;
+  } else {
+    cartList.innerHTML = cart.map(item => `
+      <div class="bg-black/40 border border-white/5 rounded-2xl p-3 flex gap-3 items-center">
+        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-xl object-cover" onerror="this.src='https://placehold.co/100/222/fff?text=Pepito'">
+        <div class="flex-1 min-w-0">
+          <h4 class="font-bold text-white text-sm truncate">${item.name}</h4>
+          <span class="text-brand-gold text-xs font-semibold">${formatPrice(item.price)}</span>
+        </div>
+        <div class="flex items-center gap-2 bg-white/5 rounded-xl p-1 border border-white/10">
+          <button onclick="changeQuantity(${item.id}, -1)" class="w-6 h-6 rounded-lg bg-black/50 text-white font-bold flex items-center justify-center hover:bg-brand-gold hover:text-black transition-colors">-</button>
+          <span class="text-xs font-bold text-white w-4 text-center">${item.quantity}</span>
+          <button onclick="changeQuantity(${item.id}, 1)" class="w-6 h-6 rounded-lg bg-black/50 text-white font-bold flex items-center justify-center hover:bg-brand-gold hover:text-black transition-colors">+</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Calcular Total
+  const totalSum = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  subtotalEl.textContent = formatPrice(totalSum);
+  totalEl.textContent = formatPrice(totalSum);
+}
+
+/* -------------------------------------------------------------
+ * 3. ENVIAR PEDIDO A WHATSAPP
+ * ------------------------------------------------------------- */
+function sendOrderToWhatsApp() {
+  if (cart.length === 0) {
+    alert("Agregá al menos un producto al carrito antes de realizar el pedido.");
+    return;
+  }
+
+  const name = document.getElementById('customerName').value.trim();
+  const address = document.getElementById('customerAddress').value.trim();
+  const payment = document.getElementById('paymentMethod').value;
+  const notes = document.getElementById('orderNotes').value.trim();
+
+  if (!name || !address) {
+    alert("Por favor completá tu nombre y dirección de entrega.");
+    return;
+  }
+
+  // Formatear Mensaje de Pedido
+  let message = `🍔 *NUEVO PEDIDO - HAMBURGUESAS PEPITO* 🍔\n\n`;
+  message += `👤 *Cliente:* ${name}\n`;
+  message += `📍 *Dirección:* ${address}\n`;
+  message += `💳 *Método de Pago:* ${payment}\n`;
+  if (notes) message += `📝 *Notas:* ${notes}\n`;
+  
+  message += `\n🛒 *DETALLE DEL PEDIDO:*\n`;
+  
+  let totalSum = 0;
+  cart.forEach(item => {
+    const subtotal = item.price * item.quantity;
+    totalSum += subtotal;
+    message += `• ${item.quantity}x ${item.name} - ${formatPrice(subtotal)}\n`;
+  });
+
+  message += `\n💰 *TOTAL:* ${formatPrice(totalSum)}\n\n`;
+  message += `¡Muchas gracias! Quedo a la espera de la confirmación.`;
+
+  // Número proporcionado: 116852126 (Añadimos prefijo de Argentina +54 9 11...)
+  const phone = "549116852126"; 
+  const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+  window.open(whatsappUrl, '_blank');
+}
+
+/* -------------------------------------------------------------
+ * 4. CONTROL DEL MODAL DE CARRITO
+ * ------------------------------------------------------------- */
+const cartModal = document.getElementById('cartModal');
+const cartPanel = document.getElementById('cartPanel');
+const cartBackdrop = document.getElementById('cartBackdrop');
+
+function openCart() {
+  cartModal.classList.remove('pointer-events-none', 'opacity-0');
+  cartPanel.classList.remove('translate-x-full');
+}
+
+function closeCart() {
+  cartPanel.classList.add('translate-x-full');
+  cartModal.classList.add('opacity-0');
+  setTimeout(() => {
+    cartModal.classList.add('pointer-events-none');
+  }, 300);
+}
+
+document.getElementById('openCartBtn').addEventListener('click', openCart);
+document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+cartBackdrop.addEventListener('click', closeCart);
+
+/* -------------------------------------------------------------
+ * 5. FILTROS DE CATEGORÍA
+ * ------------------------------------------------------------- */
+document.querySelectorAll('#categoryFilter .cat-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    document.querySelectorAll('#categoryFilter .cat-btn').forEach(b => {
+      b.classList.remove('bg-brand-gold', 'text-black', 'font-bold');
+      b.classList.add('bg-brand-card', 'text-gray-300', 'font-medium');
+    });
+    
+    e.target.classList.remove('bg-brand-card', 'text-gray-300', 'font-medium');
+    e.target.classList.add('bg-brand-gold', 'text-black', 'font-bold');
+
+    const category = e.target.getAttribute('data-cat');
+    renderProducts(category);
+  });
+});
+
+/* -------------------------------------------------------------
+ * 6. ANIMACIÓN HERO SCROLL (CÓDIGO ORIGINAL MEJORADO)
+ * ------------------------------------------------------------- */
+const vids = [document.getElementById('bgv'), document.getElementById('mainv')];
+const wrap = document.getElementById('mainWrap');
+const bar = document.getElementById('bar');
+const tap = document.getElementById('tap');
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const T = [
+  [0, .1, 't0'],
+  [.16, .34, 't1'],
+  [.38, .56, 't2'],
+  [.6, .78, 't3'],
+  [.82, .98, 't4']
+].map(a => [a[0], a[1], document.getElementById(a[2])]);
+
+const K = [
+  [0, 1, 0, 0],
+  [.17, 1.05, 0, 5],
+  [.4, 1.5, 0, 18],
+  [.62, 1.55, 0, -6],
+  [.84, 1.35, 0, -22],
+  [1, 1, 0, 0]
+];
+
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = t => t * t * (3 - 2 * t);
+let target = 0, P = 0;
+
+function upd() {
+  // Ajuste de altura del scroll inmersivo
+  const scrollSpace = document.querySelector('.scroll-space');
+  const m = scrollSpace ? scrollSpace.offsetHeight : 1000;
+  target = Math.min(1, Math.max(0, scrollY / m));
+}
+
+addEventListener('scroll', upd, { passive: true });
+upd();
+
+function loop() {
+  requestAnimationFrame(loop);
+  P += (target - P) * (RM ? 1 : .06);
+  
+  let i = 0;
+  while (i < K.length - 2 && P > K[i + 1][0]) i++;
+  
+  const a = K[i], b = K[i + 1];
+  const t = ease(Math.min(1, Math.max(0, (P - a[0]) / (b[0] - a[0]))));
+  
+  if (wrap) {
+    wrap.style.transform = `translate(${lerp(a[2], b[2], t)}%,${lerp(a[3], b[3], t)}%) scale(${lerp(a[1], b[1], t)})`;
+  }
+  
+  T.forEach(s => {
+    if (s[2]) s[2].classList.toggle('on', P >= s[0] && P <= s[1]);
+  });
+  
+  if (bar) {
+    bar.style.width = (P * 100) + '%';
+  }
+}
+loop();
+
+// Control de video y reproducción
+if (vids[1] && vids[0]) {
+  vids[1].addEventListener('play', () => {
+    vids[0].currentTime = vids[1].currentTime;
+    vids[0].play().catch(() => {});
+  });
+
+  Promise.all(vids.map(v => v.play())).catch(() => {
+    if (tap) tap.style.display = 'grid';
+  });
+
+  if (tap) {
+    tap.addEventListener('click', () => {
+      vids.forEach(v => v.play());
+      tap.style.display = 'none';
+    });
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    vids.forEach(v => document.hidden ? v.pause() : v.play().catch(() => {}));
+  });
+}
+
+// Inicialización general
+window.onload = function() {
+  renderProducts();
+  updateCartUI();
+};
+</script>
+</body>
+</html>
